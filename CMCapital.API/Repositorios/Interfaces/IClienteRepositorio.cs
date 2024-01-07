@@ -1,4 +1,5 @@
 ﻿using CMCapital.API.Entidades;
+using System.Linq.Expressions;
 
 namespace CMCapital.API.Repositorios.Interfaces;
 
@@ -7,5 +8,6 @@ public interface IClienteRepositorio
     Task<Cliente?> ObterPorNome(string nome);
     Task<Cliente?> Criar(Cliente cliente);
     Task<Cliente?> Atualizar(int codigo, Cliente cliente);
-    Task<bool> Deletar(int codigo);
+    Task Deletar(int codigo);
+    Task<Cliente?> ObterPorQuery(Expression<Func<Cliente, bool>> query);
 }

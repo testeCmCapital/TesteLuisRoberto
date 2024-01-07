@@ -26,12 +26,12 @@ Esta API Rest consiste de end-points que possibilitam:
 ### É obrigatório as portas 1433 e 5000 estarem liberadas
 
 1. Fazer pull do projeto
-2. Abra um prompt de comando no dirétorio `VariacaoAtivo\Infra`
+2. Abra um prompt de comando no dirétorio `Infra`
 3. Execute o comando `docker-compose build` 
 4. Execute o comando `docker-compose up` 
-4. Abra um prompt de comando no dirétorio `VariacaoAtivo\src\VariacaoAtivo\VariacaoAtivo.API`
+4. Abra um prompt de comando no dirétorio `CMCapital.API`
 5. Execute o comando `dotnet ef database update`
-6. Cole no navegador o link `http://localhost:5000/VariacaoAtivo`
+6. Cole no navegador o link `http://localhost:5000/swagger/index.html`
 
 ## Acesso a base de dados
 

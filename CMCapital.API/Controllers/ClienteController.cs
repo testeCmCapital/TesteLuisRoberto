@@ -1,4 +1,5 @@
-﻿using CMCapital.API.Servicos.Interfaces;
+﻿using CMCapital.API.DTOs;
+using CMCapital.API.Servicos.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMCapital.API.Controllers;
@@ -16,7 +17,27 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> ObterPorNome([FromQuery] string name)
     {
         var resultado = await _clienteServico.ObterPorNome(name);
-        if (resultado == null) return NotFound();
+        return Ok(resultado);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Criar([FromBody] ClienteDTO cliente)
+    {
+        var resultado = await _clienteServico.Criar(cliente);
+        return Ok(resultado);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Atualizar([FromQuery] int codigo, [FromBody] ClienteDTO cliente)
+    {
+        var resultado = await _clienteServico.Atualizar(codigo, cliente);
+        return Ok(resultado);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Deletar([FromQuery] int codigo)
+    {
+        var resultado = await _clienteServico.Deletar(codigo);
         return Ok(resultado);
     }
 }
