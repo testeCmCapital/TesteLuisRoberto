@@ -27,7 +27,7 @@ public class ProdutoServico : IProdutoServico
 
     public async Task<Produto> Atualizar(int codigo, ProdutoDTO produto)
     {
-        Expression<Func<Produto, bool>> query = q => q.Descricao == produto.Descricao || q.ValorUnitario == produto.ValorUnitario;
+        Expression<Func<Produto, bool>> query = q => q.Descricao == produto.Descricao;
         var produtoExiste = await _produtoRepositorio.ObterPorQuery(query);
 
         if (produtoExiste != null && produtoExiste.Codigo != codigo) throw new Excecao(MensagensConstantes.PRODUTO_JA_CADASTRADO, HttpStatusCode.BadRequest);
@@ -40,10 +40,10 @@ public class ProdutoServico : IProdutoServico
 
     public async Task<Produto> Criar(ProdutoDTO dto)
     {
-        Expression<Func<Produto, bool>> query = q => q.Descricao == dto.Descricao || q.ValorUnitario == dto.ValorUnitario;
+        Expression<Func<Produto, bool>> query = q => q.Descricao == dto.Descricao;
 
         var produtoExiste = await _produtoRepositorio.ObterPorQuery(query);
-        if (produtoExiste != null) throw new Excecao(MensagensConstantes.DADOS_CLIENTE_JA_EM_USO, HttpStatusCode.BadRequest);
+        if (produtoExiste != null) throw new Excecao(MensagensConstantes.PRODUTO_JA_CADASTRADO, HttpStatusCode.BadRequest);
 
         var produto = _mapper.Map<ProdutoDTO, Produto>(dto);
         produto.DataCadastro = DateTime.Now;

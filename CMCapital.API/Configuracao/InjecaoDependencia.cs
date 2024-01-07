@@ -20,10 +20,12 @@ public class InjecaoDependencia
         //Repositorios
         services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
         services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+        services.AddScoped<ICompraRepositorio, CompraRepositorio>();
 
         //Servicos    
         services.AddScoped<IClienteServico, ClienteServico>();
         services.AddScoped<IProdutoServico, ProdutoServico>();
+        services.AddScoped<ICompraServico, CompraServico>();
 
         //Auxiliares
         services.AddScoped<MiddlewareGlobalExcecoes>();

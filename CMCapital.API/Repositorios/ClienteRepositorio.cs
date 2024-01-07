@@ -16,9 +16,9 @@ public class ClienteRepositorio : IClienteRepositorio
         _contexto = contexto;
     }
 
-    public async Task<Cliente?> ObterPorNome(string nome)
+    public async Task<IEnumerable<Cliente>> ObterPorNome(string nome)
     {
-        var resultado = await _contexto.Cliente.FirstOrDefaultAsync(c => c.Nome.Contains(nome));
+        var resultado = await _contexto.Cliente.Where(c => c.Nome.Contains(nome)).ToListAsync();
         return resultado;
     }
 
