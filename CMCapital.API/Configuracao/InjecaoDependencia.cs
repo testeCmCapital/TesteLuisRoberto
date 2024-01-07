@@ -1,8 +1,12 @@
-﻿using CMCapital.API.Helpers;
+﻿using CMCapital.API.DTOs;
+using CMCapital.API.DTOs.Validadores;
+using CMCapital.API.Helpers;
 using CMCapital.API.Repositorios;
 using CMCapital.API.Repositorios.Interfaces;
 using CMCapital.API.Servicos;
 using CMCapital.API.Servicos.Interfaces;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace CMCapital.API.Configuracao;
 
@@ -30,5 +34,10 @@ public class InjecaoDependencia
         //Auxiliares
         services.AddScoped<MiddlewareGlobalExcecoes>();
         services.AddAutoMapper(typeof(Mapeamento).Assembly);
+        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+
+        //validadores
+        services.AddSingleton<IValidator<ClienteDTO>, ClienteDTOValidador>();
+        services.AddSingleton<IValidator<ProdutoDTO>, ProdutoDTOValidador>();
     }
 }

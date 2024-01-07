@@ -24,9 +24,11 @@ Esta API Rest consiste de end-points que possibilitam:
 ## Executando a API e banco de dados
 
 ### É obrigatório as portas 1433 e 5000 estarem liberadas
+### Necessário ter o Docker instalado
+### A aplicação deve estar rodando somente no docker durante o passo 5
 
 1. Fazer pull do projeto
-2. Abra um prompt de comando no dirétorio `Infra`
+2. Abra um prompt de comando no diretório `Infra`
 3. Execute o comando `docker-compose build` 
 4. Execute o comando `docker-compose up` 
 4. Abra um prompt de comando no dirétorio `CMCapital.API`
