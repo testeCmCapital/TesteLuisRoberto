@@ -14,9 +14,9 @@ public class ProdutoRepositorio : IProdutoRepositorio
         _contexto = contexto;
     }
 
-    public async Task<Produto?> ObterPorDescricao(string descricao)
+    public async Task<IEnumerable<Produto>> ObterPorDescricao(string descricao)
     {
-        var resultado = await _contexto.Produto.FirstOrDefaultAsync(c => c.Descricao == descricao);
+        var resultado = await _contexto.Produto.Where(c => c.Descricao.Contains(descricao)).ToListAsync();
         return resultado;
     }
 
@@ -32,13 +32,14 @@ public class ProdutoRepositorio : IProdutoRepositorio
         return resultado;
     }
 
-    public async Task<Produto?> Atualizar(int codigo, Produto cliente)
+    public async Task<Produto?> Atualizar(int codigo, Produto produto)
     {
         var resultado = await ObterPorCodigo(codigo);
         if (resultado == null) return null;
 
-        cliente.Codigo = codigo;
-        _contexto.Entry(resultado).CurrentValues.SetValues(cliente);
+        produto.Codigo = codigo;
+        produto.DataCadastro = resultado.DataCadastro;
+        _contexto.Entry(resultado).CurrentValues.SetValues(produto);
         _contexto.Entry(resultado).State = EntityState.Modified;
 
         var atualizados = await _contexto.SaveChangesAsync();
@@ -47,9 +48,9 @@ public class ProdutoRepositorio : IProdutoRepositorio
         return await ObterPorCodigo(codigo);
     }
 
-    public async Task<Produto?> Criar(Produto cliente)
+    public async Task<Produto?> Criar(Produto produto)
     {
-        var resultado = await _contexto.AddAsync(cliente);
+        var resultado = await _contexto.AddAsync(produto);
         var salvo = await _contexto.SaveChangesAsync();
         if (salvo < 1) return null;
 

@@ -5,7 +5,7 @@ namespace CMCapital.API.Repositorios.Interfaces;
 
 public interface IProdutoRepositorio
 {
-    Task<Produto?> ObterPorDescricao(string descricao);
+    Task<IEnumerable<Produto>> ObterPorDescricao(string descricao);
     Task<Produto?> Criar(Produto produto);
     Task<Produto?> Atualizar(int codigo, Produto produto);
     Task Deletar(int codigo);

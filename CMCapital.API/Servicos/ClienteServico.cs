@@ -32,7 +32,7 @@ public class ClienteServico : IClienteServico
         Expression<Func<Cliente, bool>> query = q => q.Nome == cliente.Nome || q.Telefone == cliente.Telefone;
         var clienteSalvo = await _clienteRepositorio.ObterPorQuery(query);
 
-        if (clienteSalvo != null && clienteSalvo.Codigo != codigo) throw new Excecao(MensagensConstantes.DADOS_JA_EM_USO, HttpStatusCode.BadRequest);
+        if (clienteSalvo != null && clienteSalvo.Codigo != codigo) throw new Excecao(MensagensConstantes.DADOS_CLIENTE_JA_EM_USO, HttpStatusCode.BadRequest);
 
         var clienteAtualizado = await _clienteRepositorio.Atualizar(codigo, _mapper.Map<ClienteDTO, Cliente>(cliente));
         if (clienteAtualizado != null) return clienteAtualizado;
@@ -45,7 +45,7 @@ public class ClienteServico : IClienteServico
         Expression<Func<Cliente, bool>> query = q => q.Nome == cliente.Nome || q.Telefone == cliente.Telefone;
 
         var clienteSalvo = await _clienteRepositorio.ObterPorQuery(query);
-        if (clienteSalvo != null) throw new Excecao(MensagensConstantes.DADOS_JA_EM_USO, HttpStatusCode.BadRequest);
+        if (clienteSalvo != null) throw new Excecao(MensagensConstantes.DADOS_CLIENTE_JA_EM_USO, HttpStatusCode.BadRequest);
 
         var clienteCriado = await _clienteRepositorio.Criar(_mapper.Map<ClienteDTO, Cliente>(cliente));
         if (clienteCriado != null) return clienteCriado;
@@ -57,6 +57,6 @@ public class ClienteServico : IClienteServico
     public async Task<string> Deletar(int codigo)
     {
         await _clienteRepositorio.Deletar(codigo);
-        return MensagensConstantes.DELETADO_COM_SUCESSO;
+        return MensagensConstantes.CLIENTE_DELETADO_COM_SUCESSO;
     }
 }

@@ -9,5 +9,6 @@ public class Mapeamento : Profile
     public Mapeamento()
     {
         CreateMap<Cliente, ClienteDTO>().ReverseMap();
+        CreateMap<Produto, ProdutoDTO>().ReverseMap();
     }
 }
