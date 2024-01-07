@@ -19,20 +19,18 @@ public class ClienteServico : IClienteServico
         _mapper = mapper;
     }
 
-    public async Task<Cliente> ObterPorNome(string nome)
+    public async Task<IEnumerable<Cliente>> ObterPorNome(string nome)
     {
         var cliente = await _clienteRepositorio.ObterPorNome(nome);
-        if (cliente != null) return cliente;
-
-        throw new Excecao(MensagensConstantes.CLIENTE_NAO_ENCONTRADO, HttpStatusCode.NotFound);
+        return cliente;
     }
 
     public async Task<Cliente> Atualizar(int codigo, ClienteDTO cliente)
     {
-        Expression<Func<Cliente, bool>> query = q => q.Nome == cliente.Nome || q.Telefone == cliente.Telefone;
+        Expression<Func<Cliente, bool>> query = q => q.Telefone == cliente.Telefone;
         var clienteSalvo = await _clienteRepositorio.ObterPorQuery(query);
 
-        if (clienteSalvo != null && clienteSalvo.Codigo != codigo) throw new Excecao(MensagensConstantes.DADOS_CLIENTE_JA_EM_USO, HttpStatusCode.BadRequest);
+        if (clienteSalvo != null && clienteSalvo.Codigo != codigo) throw new Excecao(MensagensConstantes.TELEFONE_INDICADO_JA_EM_USO, HttpStatusCode.BadRequest);
 
         var clienteAtualizado = await _clienteRepositorio.Atualizar(codigo, _mapper.Map<ClienteDTO, Cliente>(cliente));
         if (clienteAtualizado != null) return clienteAtualizado;
@@ -42,10 +40,10 @@ public class ClienteServico : IClienteServico
 
     public async Task<Cliente> Criar(ClienteDTO cliente)
     {
-        Expression<Func<Cliente, bool>> query = q => q.Nome == cliente.Nome || q.Telefone == cliente.Telefone;
+        Expression<Func<Cliente, bool>> query = q => q.Telefone == cliente.Telefone;
 
         var clienteSalvo = await _clienteRepositorio.ObterPorQuery(query);
-        if (clienteSalvo != null) throw new Excecao(MensagensConstantes.DADOS_CLIENTE_JA_EM_USO, HttpStatusCode.BadRequest);
+        if (clienteSalvo != null) throw new Excecao(MensagensConstantes.TELEFONE_INDICADO_JA_EM_USO, HttpStatusCode.BadRequest);
 
         var clienteCriado = await _clienteRepositorio.Criar(_mapper.Map<ClienteDTO, Cliente>(cliente));
         if (clienteCriado != null) return clienteCriado;
